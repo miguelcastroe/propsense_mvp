@@ -14,6 +14,11 @@ export default function Home() {
     });
 
     const data = await res.json();
+
+    // DEBUG: Mostrar en consola y popup la salida completa
+    console.log("DEBUG Output:", data.output);
+    alert("DEBUG:\n\n" + data.output);
+
     let msg = "No se pudo extraer el mensaje.";
     let fichaTexto = "No se pudo extraer la ficha.";
 
@@ -22,7 +27,7 @@ export default function Home() {
       msg = mensajeMatch[1].trim();
       fichaTexto = data.output.split("[FICHA PARA EL EQUIPO DE VENTAS]")[1]?.trim() || fichaTexto;
     } else {
-      msg = data.output.trim();
+      msg = "Formato desconocido, mostrando respuesta completa:\n\n" + data.output.trim();
     }
 
     setHistory([...history, nuevaEntrada, `PropSense: ${msg}`]);
