@@ -37,13 +37,16 @@ Debes responder siempre con el siguiente formato:
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'mistralai/mistral-7b-instruct',
+        model: 'google/gemini-pro',
         messages: prompt,
         temperature: 0.7
       })
     });
 
     const data = await resp.json();
+
+    console.log("🧠 DeepInfra RAW:", JSON.stringify(data, null, 2));
+
     const output = data.choices?.[0]?.message?.content || '⚠️ Respuesta vacía de DeepInfra';
     res.status(200).json({ output });
   } catch (e) {
