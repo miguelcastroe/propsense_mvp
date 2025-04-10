@@ -10,10 +10,10 @@ export default async function handler(req, res) {
 2. Responder con un texto útil, cercano y humano.
 3. Generar una ficha clara y estructurada para el equipo de ventas.
 
-Debes responder siempre con el siguiente formato, sin saltártelo:
+Debes responder siempre con el siguiente formato:
 
 [MENSAJE PARA EL LEAD]
-[Escribe aquí tu respuesta para el lead, siempre en español, con tono empático y útil.]
+...
 
 [FICHA PARA EL EQUIPO DE VENTAS]
 - Tipo de búsqueda:
@@ -44,10 +44,14 @@ Debes responder siempre con el siguiente formato, sin saltártelo:
     });
 
     const data = await resp.json();
-    const output = data.choices?.[0]?.message?.content || 'Error al obtener respuesta.';
+
+    console.log("🧠 Respuesta cruda de DeepSeek:");
+    console.log(JSON.stringify(data, null, 2));
+
+    const output = data.choices?.[0]?.message?.content || '⚠️ Respuesta vacía de DeepSeek';
     res.status(200).json({ output });
   } catch (e) {
-    console.error('Error al contactar DeepSeek:', e);
+    console.error('❌ Error al contactar DeepSeek:', e);
     res.status(500).json({ error: 'Error al contactar DeepSeek.' });
   }
 }
