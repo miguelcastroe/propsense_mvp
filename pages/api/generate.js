@@ -30,28 +30,24 @@ Debes responder siempre con el siguiente formato:
   ];
 
   try {
-    const resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    const resp = await fetch('https://api.deepinfra.com/v1/openai/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+        'Authorization': `Bearer ${process.env.DEEPINFRA_API_KEY}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: 'mistralai/mistral-7b-instruct',
         messages: prompt,
         temperature: 0.7
       })
     });
 
     const data = await resp.json();
-
-    console.log("🧠 Respuesta cruda de DeepSeek:");
-    console.log(JSON.stringify(data, null, 2));
-
-    const output = data.choices?.[0]?.message?.content || '⚠️ Respuesta vacía de DeepSeek';
+    const output = data.choices?.[0]?.message?.content || '⚠️ Respuesta vacía de DeepInfra';
     res.status(200).json({ output });
   } catch (e) {
-    console.error('❌ Error al contactar DeepSeek:', e);
-    res.status(500).json({ error: 'Error al contactar DeepSeek.' });
+    console.error('❌ Error al contactar DeepInfra:', e);
+    res.status(500).json({ error: 'Error al contactar DeepInfra.' });
   }
 }
